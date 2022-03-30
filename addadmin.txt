@@ -1,0 +1,4 @@
+"Admin"[{
+    "email":"gest.uniline@gmail.com",
+    "password":"admin"
+}]

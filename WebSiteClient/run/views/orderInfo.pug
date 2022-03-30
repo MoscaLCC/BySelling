@@ -1,0 +1,99 @@
+extends layout
+block content
+    div(class='pg-opt')
+        div(class='container')
+            div(class='row')
+                div(class='col-md-6')
+                    h2 #{NOME}
+                div(class='col-md-6')
+                    ol(class='breadcrumb')
+                        li
+                            a(href = "#")
+                                i
+                                    img(src="../images/upload/bandeiraP.png" style="max-width:30px; vertical-align: middle")
+                        li
+                            a(href = "#")
+                                i
+                                    img(src="../images/upload/bandeiraI.png" style="max-width:30px; height: 20px; vertical-align: middle")
+                        li
+                            a(href='/account') O meu perfil
+                        li
+                            a(href='/logout') Logout
+
+    .span9
+        .content
+            .module
+                .module-head
+                    center
+                        h2 Informação Encomenda
+                .module-body
+                    center
+                        table(class="w3-table w3-bordered w3-card-4" style="width:50%; margin-left:20%; margin-right:20%")
+                            .profile-tab-content.tab-content(style="margin-top: 20px")
+                                    tr
+                                        td
+                                            h3 #{products.NAME}
+                                            tr
+                                                td(width="50%") 
+                                                    img(src="/images/upload/"+products.FOTO alt="Smiley face" style="max-width:50%; max-height:50%;")
+                                                td
+                                                    H3 Descrição
+                                                    label(name='descrição')
+                                                        p #{products.DESCRIPTION}
+                                            tr
+                                                td
+                                                    p(class = "profile-brief") 
+                                                        strong(style="font-weight: 700;") Tamanho pedido: 
+                                                        | #{ordprod.opcao_valor.split("_")[0]}
+                                                    
+                                                    p(class = "profile-brief") 
+                                                        strong(style="font-weight: 700;") Quantidade pedida: 
+                                                        | #{ordprod.opcao_valor.split("_")[1]}
+                                                td
+                                                    p(class = "profile-brief") 
+                                                        strong(style="font-weight: 700;") Data do pedido: 
+                                                        | #{prettyDate(ordem.BEGIN_DATE)}                                                    
+                                                    
+                                                    p(class = "profile-brief") 
+                                                        strong(style="font-weight: 700;") Previsão de Entrega: 
+                                                        | #{prettyDate(ordem.ASKED_DELIVERY_DATE)}
+                                                    
+                                            tr
+                                                td
+                                                    p(class = "profile-brief") 
+                                                        strong(style="font-weight: 700;") Referencia para seguir: 
+                                                        | #{ordem.TRACKING}
+
+                        br
+
+                        -if(ordem.STATUS < 2)
+                            button(class="btn btn-info btn-lg" onclick="editarEvento('"+ ordem.ID_ORDER +"')") Pedir Alteração
+                            div(style="width:8px; height:auto; display:inline-block;")
+                            button(class="btn btn-info btn-lg" onclick="eliminarEvento('"+ ordem.ID_ORDER +"')") Pedir Cancelamento
+                        -if(ordem.STATUS == 3)
+                            button(class="btn btn-info btn-lg" onclick="concluirEvento('"+ ordem.ID_ORDER +"')") Recebido
+                br
+                br
+                center
+                    a(class="w3-button w3-large w3-theme-d4 w3-center" href="/home" title="voltar")
+                        i(class="fa fa-home")
+                        | Voltar
+                    br
+                    br
+                    br
+            script.
+                function eliminarEvento(id) {
+                    if (confirm("Tem a certeza que pretende cancelar esta encomenda?")) {
+                        window.location.replace("/home/cancelar/" + id)
+                    }
+                }
+                function editarEvento(id) {
+                    if (confirm("Tem a certeza que pretende alterar esta encomenda")) {
+                        window.location.replace("/home/alterar/" + id)
+                    }
+                }
+                function concluirEvento(id) {
+                    if (confirm("Tem a certeza que pretende finalizar esta encomenda")) {
+                        window.location.replace("/orderInfo/finalizar/" + id)
+                    }
+                }

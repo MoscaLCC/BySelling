@@ -1,0 +1,117 @@
+extends layout
+
+block content
+    body 
+
+        div(class='pg-opt')
+            div(class='container')
+                div(class='row')
+                    div(class='col-md-6')
+                        h2 #{NOME}
+                    div(class='col-md-6')
+                        ol(class='breadcrumb')
+                            //li
+                                a(href = "#")
+                                    i
+                                        img(src="../images/upload/bandeiraP.png" style="max-width:30px; vertical-align: middle")
+                            //li
+                                a(href = "#")
+                                    i
+                                        img(src="../images/upload/bandeiraI.png" style="max-width:30px; height: 20px; vertical-align: middle")
+                            li
+                                a(href='/home') Home
+                            li
+                                a(href='/logout') Logout
+
+        section(class='slice bg-white')
+            div(class='wp-section')
+                div(class='container')
+                    div(class='row')
+                        div(class='wp-block default user-form')
+                            div(class='form-body')
+                                form(style="position:relative;z-index: 1;" action='/prodef' id='frmProdDef' class='sky-form' method='post' enctype='multipart/form-data')
+                                    fieldset(class='no-padding')
+                                        h1( name='defProduto' class="defProduto") Catalogo de produtos
+                                        hr( name='defProduto' class="defProduto")                                      
+                                        div(id="fotografias")
+                                        table(id="fotos")
+                        
+                br
+                br
+                center
+                    a(class="w3-button w3-large w3-theme-d4 w3-center" href="/home" title="voltar")
+                        i(class="fa fa-home")
+                        | Voltar
+                br
+                br
+                br
+        script.
+            $(document).ready(function () {
+                var products = !{JSON.stringify(dataProducts)};
+                var sizeEcra = document.documentElement.clientWidth
+                var tamanhoFoto = 400
+                var valor = (sizeEcra / tamanhoFoto) - 1
+                var p = 0
+                var aux = 0;
+                while(p<products.length){
+                    aux = p;
+                    var tr = document.createElement('tr')
+                    tr.setAttribute("id", "foto" + aux)
+                    document.getElementById("fotos").appendChild(tr)
+                    for(var j=0; j<valor && p<products.length; j++){ 
+                        inserFotosd("foto" + aux, products[p])
+                        p++;
+                    }
+                }
+            });
+            function encomendar(id){
+                window.location.href = "/produto/" + id;
+            }
+            function inserFotosd(name, foto) {
+
+                var td = document.createElement('td')
+                var container = document.createElement('div')
+                container.setAttribute("class", "fotoContainer")
+
+                var nomeh = document.createElement('P')
+                var nomet = document.createTextNode(""+ foto.NAME);
+                nomeh.appendChild(nomet);
+
+                var figure = document.createElement('figure')
+                figure.setAttribute("class", "myfigure2")
+                var img = document.createElement('img')
+                img.setAttribute("class", "joint-img")
+                img.setAttribute("src", "/images/upload/"+foto.FOTO)
+                img.setAttribute("alt", "your image")
+
+
+                var figcaption = document.createElement('figcaption')
+                var label = document.createElement('label')
+                label.setAttribute("class", "custom-file-upload")
+                label.setAttribute("style", "withd: 100%; height: 100%")
+
+                var input = document.createElement('input')
+                input.setAttribute("type", "button")
+                input.setAttribute("style", "display: none");
+                input.setAttribute("onclick", "encomendar("+foto.id_PRODUCT+")")
+                                            
+                var p = document.createElement('P')
+                p.innerHTML = "ENCOMENDAR"
+
+                label.appendChild(input)
+                label.appendChild(p)
+
+                figcaption.appendChild(label)
+                figure.appendChild(img)
+                figure.appendChild(figcaption)
+
+                container.appendChild(nomeh)
+                
+                container.appendChild(figure)
+
+                td.appendChild(container)
+
+
+                document.getElementById(name).appendChild(td)
+            }
+    

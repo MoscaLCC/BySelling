@@ -1,0 +1,169 @@
+extends layout
+
+block content
+    body
+        <!-- MAIN CONTENT -->
+        div(class='pg-opt')
+            div(class='container')
+                div(class='row')
+                    div(class='col-md-6')
+                        h2 #{NOME}
+                    div(class='col-md-6')
+                        ol(class='breadcrumb')
+                            li
+                                a(href = "#")
+                                    i
+                                        img(src="../images/upload/bandeiraP.png" style="max-width:30px; vertical-align: middle")
+                            li
+                                a(href = "#")
+                                    i
+                                        img(src="../images/upload/bandeiraI.png" style="max-width:30px; height: 20px; vertical-align: middle")
+                            li
+                                a(href='/') Home
+        section(class='slice bg-white')
+            div(class='wp-section')
+                div(class='container')
+                    if(status != null)
+                        .alert.alert-warning
+                            button.close(type='button', data-dismiss='alert') ×
+                            strong Ups!
+                            |  #{status}
+                    div(class='row')
+                        div(class='col-md-4')
+                            div(class='wp-block default user-form')
+                                div(class='form-header')
+                                    h2 Iniciar a sessão na sua conta
+                                div(class='form-body')
+                                    form(action='/signin' id='frmLogin' class='sky-form' method='post' enctype='multipart/form-data')
+                                        fieldset
+                                            section
+                                                div(class='form-group')
+                                                    label(class='label') E-mail
+                                                    label(class='input')
+                                                        i(class='icon-append fa fa-user')
+                                                        input(type='email' name='username' placeholder='')
+                                            section
+                                                div(class='form-group')
+                                                    label(class='label') Password
+                                                    label(class='input')
+                                                        i(class='icon-append fa fa-lock')
+                                                        input(type='password' name='password')
+                                            section
+                                                div(class='row')
+                                                    div(class='col-md-12')
+                                                        label(class='checkbox')
+                                                        input(type='checkbox' name='remember' checked='true')
+                                                        i Manter-me ligado
+
+                                            section
+                                                input(type='submit' class='btn btn-base btn-icon btn-icon-right pull-right' href='order' style='width: 150px;' value="Entrar")
+                                div(class='form-footer')
+                                    p Perdeu a sua password?
+                                        a(href='#') Clique aqui para recupera-la.
+                        div(class='col-md-8')
+                            div(class='wp-block default user-form')
+                                div(class='form-header')
+                                    h2 Sou um novo Cliente - Criar uma Conta
+                                div(class='form-body')
+                                    form(action='/signup' id='frmRegister' class='sky-form' method='post' enctype='multipart/form-data')
+                                        fieldset(class='no-padding')
+                                            section
+                                            section
+                                            section
+                                                div(class='row')
+                                                    div(class='col-xs-6')
+                                                        div(class='form-group')
+                                                            div(class='form-group')
+                                                                label(class='label') E-mail
+                                                                label(class='input')
+                                                                    i(class='icon-append fa fa-envelope-o')
+                                                                    input(type='email' name='email' placeholder='')
+                                                                    b(class='tooltip tooltip-bottom-right') Necessário para verificar a sua conta
+                                                    div(class='col-xs-6')
+                                                        div(class='form-group')
+                                                            label(class='label') Contacto Telefonico
+                                                            label(class='input')
+                                                                i(class='icon-append fa fa-phone')
+                                                                input(type='text' name='phone' placeholder='' pattern='[0-9]{9}$')
+
+                                                div(class='row')
+                                                    div(class='col-md-6')
+                                                        div(class='form-group')
+                                                            label(class='label') Password
+                                                            label(class='input')
+                                                                i(class='icon-append fa fa-lock')
+                                                                input(type='password' name='pass' placeholder='')
+                                                                b(class='tooltip tooltip-bottom-right') Necessário para inicar a sessão
+                                                    div(class='col-md-6')
+                                                        div(class='form-group')
+                                                            label(class='label') Confirmar Password
+                                                            label(class='input')
+                                                                i(class='icon-append fa fa-lock')
+                                                                input(type='password' name='cpassword' placeholder='')
+                                                                b(class='tooltip tooltip-bottom-right') Necessário para verificar a sua conta
+                                            hr
+                                            section
+                                                div(class='row')
+                                                    section(class='col-xs-6')
+                                                        label(class='label') Nome Proprio\Empresa
+                                                        label(class='input')
+                                                            i(class='icon-append fa fa-user')
+                                                            input(type='text' name='fname' placeholder='')
+                                                    
+                                                    section(class='col-xs-6')
+                                                        label(class='label') NIF
+                                                        label(class='input')
+                                                            i(class='icon-append fa fa-user')
+                                                            input(type='text' name='nif' placeholder='' pattern='[0-9]{9}$')
+
+                                        fieldset
+                                            div(class='row')
+                                                section(class='col-xs-4')
+                                                    label(class='select')
+                                                        select(name='country')
+                                                            option(value='0' selected=' disabled=') País
+                                                            option(value='PT') Portugal (Continental)
+                                                            option(value='IL') Portugal (Ilhas)
+                                                            option(value='ES') Estrangeiro
+                                                        i
+                                                section(class='col-xs-4')
+                                                    label(class='input')
+                                                        input(type='text' name='rua' placeholder='Rua')
+                                                section(class = 'col-xs-4')
+                                                    label(class='input')
+                                                        input(type='text' name='porta' placeholder='Número da Porta')
+                                                section(class='col-xs-3')
+                                                    label(class='input')
+                                                        input(type='text' name='zip' placeholder='Código Postal' pattern='[0-9]{4}-[0-9]{3}$')
+                                                section(class='col-xs-7')
+                                                    label(class='input')
+                                                        input(type='text' name='city' placeholder='Cidade')
+                                            div(class='row')
+                                                        figure(class="myfigure")
+                                                            img(class="joint-img" id="img1" name="img1" src="/images/upload/avatar.png" alt="your image")
+                                                            figcaption
+                                                                label(class="custom-file-upload")
+                                                                    input(class="joint" type='file' id="foto1" name="foto1")
+                                                                    p Mudar Imagem
+                                            section
+                                                section
+                                                    input(type="submit" class='btn btn-base btn-icon btn-icon-right pull-right' style='width: 150px;' value='Registar Agora')
+
+                                div(class='form-footer')
+                                    p Porque é que preciso de uma conta?
+                                        a(href='#') Clique aqui para descobrir.
+
+                                script.
+                                    function readURL(input) {
+                                        if (input.files && input.files[0]) {
+                                            var reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                $('#img1').attr('src', e.target.result)
+                                            }
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                    }
+                                    $(".joint").change(function () {
+                                        readURL(this);
+                                    })
+

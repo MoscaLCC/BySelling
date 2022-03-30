@@ -1,0 +1,92 @@
+extends layout
+
+block content
+    body 
+
+        div(class='pg-opt')
+            div(class='container')
+                div(class='row')
+                    div(class='col-md-6')
+                        h2 #{NOME}
+                    div(class='col-md-6')
+                        ol(class='breadcrumb')
+                            //li
+                                a(href = "#")
+                                    i
+                                        img(src="../images/upload/bandeiraP.png" style="max-width:30px; vertical-align: middle")
+                            //li
+                                a(href = "#")
+                                    i
+                                        img(src="../images/upload/bandeiraI.png" style="max-width:30px; height: 20px; vertical-align: middle")
+                            li
+                                a(href='/home') Home
+                            li
+                                a(href='/logout') Logout
+
+        section(class='slice bg-white')
+            div(class='wp-section')
+                div(class='container')
+                    div(class='row')
+                        div(class='wp-block default user-form')
+                            div(class='form-body')
+                                form(style="position:relative;z-index: 1;" action='/prodef' id='frmProdDef' class='sky-form' method='post' enctype='multipart/form-data')
+                                    fieldset(class='no-padding')
+                                        h1( name='defProduto' class="defProduto") #{dataProducts.NAME}
+                                        hr( name='defProduto' class="defProduto")                                      
+                                        div(id="fotografias")
+                                        table(id="fotos")
+                                            tr
+                                                td(width="70%") 
+                                                    img(src="/images/upload/"+dataProducts.FOTO alt="Smiley face" width="80%")
+                                                td
+                                                    H4 Descrição
+                                                    label(name='descrição')
+                                                        p #{dataProducts.DESCRIPTION}
+                                                        p 
+                                                            | Quantidade por pedido
+                                                            |  #{dataProducts.QUANTITY_PER_PACK}
+
+                                                    br
+                                                    H4 Tamanho
+                                                    label(name='tamanho')
+                                                        label(class='select')
+                                                        select(name='size' id='size' class="w3-input w3-border w3-hover")
+
+                                                    br
+                                                    H4 Quantidade
+                                                    label(name='qauntidade')
+                                                        label(class='select')
+                                                        select(name='quant' id='quant' class="w3-input w3-border w3-hover")
+                                                        input(type='number' name='idproduto' style="display:none" value=""+dataProducts.id_PRODUCT)
+                                                        input(type='text' name='nameproduto' style="display:none" value=""+dataProducts.NAME)
+                                                    
+
+                                    section
+                                        input(type='submit' class='btn btn-base btn-icon btn-icon-right pull-right' style='width: 200px;' value='Efectuar Encomenda')
+
+                br
+                br
+                center
+                    a(class="w3-button w3-large w3-theme-d4 w3-center" href="/home" title="voltar")
+                        i(class="fa fa-home")
+                        | Voltar
+                br
+                br
+                br
+        script.
+            $(document).ready(function () {
+                var product = !{JSON.stringify(dataProducts)};
+                var sizes = !{JSON.stringify(dataSizes)};
+
+                for (var k=0;k<sizes.length;k++){
+                    var z = document.createElement('option')
+                    z.append(sizes[k].size)
+                    if(sizes[k].type == 0){
+                        document.getElementById("size").appendChild(z)
+                    } else {
+                        document.getElementById("quant").appendChild(z)
+                    }
+                }
+            });
+
+    

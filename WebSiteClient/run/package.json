@@ -1,0 +1,27 @@
+{
+  "name": "run",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www --ignore public/"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "connect": "^3.6.5",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "formidable": "^1.1.1",
+    "isemail": "^3.1.0",
+    "mongoose": "^4.13.7",
+    "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
+    "nodemailer": "^4.4.2",
+    "nodemon": "^1.12.7",
+    "pug": "2.0.0-beta11",
+    "serve-favicon": "~2.4.5",
+    "treemap": "^1.0.4",
+    "treemap-js": "^1.1.1"
+  }
+}
