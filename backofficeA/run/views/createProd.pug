@@ -1,0 +1,85 @@
+extends layout
+block content
+    .span9
+        .content
+          .module.message
+            .module-head
+                h3 Novo Produto
+            .module-body.table(style='margin-top: 20px;')
+                form(action='/createProd' id='frmRegister' class='sky-form' method='post' enctype='multipart/form-data')
+                    table
+                        tr
+                            td
+                                label.profile-brief.strong
+                                    | Name
+                                label.profile-brief.strong
+                                    input(type='text' name='nameo' placeholder='')
+                                label.profile-brief.strong 
+                                    | Descrição
+                                label.profile-brief.strong
+                                    input(type='text' name='desc' placeholder='')
+
+                                label.profile-brief.strong
+                                    figure(class="myfigure")
+                                        img(class="joint-img" id="img1" name="img1" src="/images/upload/avatar.png" alt="your image")
+                                        figcaption
+                                            label(class="custom-file-upload")
+                                                input(class="joint" type='file' id="foto1" name="foto1")
+                                                p Mudar Imagem
+                            td
+                                label.profile-brief.strong
+                                    | Tamanhos
+                                div(class="profile-brief strong" id="tams")
+                                    input(type='text' name='tams_1' placeholder='')
+                                input(type="button" onclick="addop('tams')" value="Adicionar")
+                                input(type="button" onclick="rmop('tams')" value="Remover")
+                                label.profile-brief.strong
+                                    | Quantidades
+                                div(class="profile-brief strong" id="quants")
+                                    input(type='text' name='quants_1' placeholder='')
+                                input(type="button" onclick="addop('quants')" value="Adicionar")
+                                input(type="button" onclick="rmop('quants')" value="Remover")
+                                
+
+                    section
+                        section
+                            input(type="submit" class='btn btn-base btn-icon btn-icon-right pull-right' style='width: 150px;' value='Registar Agora')
+
+
+                    
+        script.
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#img1').attr('src', e.target.result)
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $(".joint").change(function () {
+                readURL(this);
+            })
+            function addop(node) {
+                var numOps = $('#' + node).children().length + 1
+                if (numOps > 15) {
+                    alert("Impossível Aadicionar, é impossível carregar mais que 15 opções!!");
+                }
+                else {
+                    var nomeador = node + '_' + numOps
+                    var selector = '#' + node
+                    $(selector).append("<input type='text' name='" + nomeador + "' id='" + nomeador + "' class='w3-input w3-border'/>")
+                }
+            }
+            function rmop(node) {
+                var numOps = $('#' + node ).children().length
+                if (numOps <= 1) {
+                }
+                else{
+                    var nomeador = "#" + node 
+
+                    $(nomeador).children().last().remove()
+                }
+            }
+
+    

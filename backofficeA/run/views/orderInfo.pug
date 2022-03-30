@@ -1,0 +1,79 @@
+extends layout
+block content
+    .span9
+        .content
+            .module
+                .module-head
+                    h3 Informação Encomenda
+                .module-body
+                    table(style="border-collapse: separate; border-spacing: 25px; margin: 0 0 0 0;")
+                        tr(valign="top")
+                            td
+                                h4
+                                    |Referência: #{ordem.ID_ORDER}
+                                p.profile-brief.strong
+                                    | Email Cliente: #{ordem.Client_NIF}
+                                p.profile-brief.strong
+                                    | Data Encomenda: #{prettyDate(ordem.BEGIN_DATE)}
+                                p.profile-brief.strong
+                                    | Data Entrega Requerida: #{prettyDate(ordem.ASKED_DELIVERY_DATE)}
+                                -var estado
+
+                                -if(ordem.STATUS==0)
+                                    -estado = "Não Aprovada"
+                                -else 
+                                    -if(ordem.STATUS==1)
+                                        -estado = "Em processamento"
+                                    -else
+                                        -if(ordem.STATUS==2)
+                                            -estado = "Cancelada"
+                                        -else
+                                            -if(ordem.STATUS==3)
+                                                -estado = "Enviada"
+                                            -else
+                                                -estado = "Finalizada"
+                                p.profile-brief.strong
+                                    | Estado: #{estado} 
+                            td
+                                h4
+                                    | #{produt.NAME}
+                                p.profile-brief.strong
+                                    | Tamanho: #{ordprod.opcao_valor.split('_')[0]}
+                                p.profile-brief.strong
+                                    | Quantidade: #{ordprod.opcao_valor.split('_')[1]}
+                                p.profile-brief.strong
+                                    img(src="/images/upload/"+produt.FOTO alt="Smiley face" style="max-width:20%; max-height:20%;")
+
+                    .profile-details.muted
+                        form(action="/compose/clientInfo/" + ordem.Client_NIF, method="post")
+                            button(class="btn" type="submit")
+                                i.icon-envelope-alt.shaded
+                                |    Enviar Mensagem
+
+            
+
+                    form(action="/orderInfo/pdf/" + ordem.ID_ORDER, method="post" style="display:inline; margin:0px; padding:0px;")
+                        button(class="btn btn-large btn-primary pull-right" type="submit" style = "margin-left: 5px;") Gerar PDF
+
+                    -if(ordem.STATUS < 2)
+                        form(action="/orderInfo/encomendas/" + ordem.ID_ORDER+"?_method=PUT", method="post", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn btn-large btn-danger pull-right" type="submit" style = "margin-left: 5px;") Cancelar
+
+                    -if(ordem.STATUS < 2)
+                        form(action="/produto/" + ordem.ID_ORDER+"?_method=GET", method="get", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn btn-large btn-warning pull-right" type="submit" style = "margin-left: 5px;") Editar
+
+                    -if(ordem.STATUS==0)
+                        form(action="/orderInfo/exportar/" + ordem.ID_ORDER, method="post", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn btn-large btn-success pull-right" type="submit" style = "margin-left: 5px;") Aprovar
+
+                    -if(ordem.STATUS==1)
+                        form(action="/orderInfo/enviado/" + ordem.ID_ORDER, method="post", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn btn-large btn-success pull-right" type="submit" style = "margin-left: 5px;") Enviado
+
+                    -if(ordem.STATUS==3)
+                        form(action="/orderInfo/finalizar/" + ordem.ID_ORDER, method="post", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn btn-large btn-success pull-right" type="submit" style = "margin-left: 5px;") Finalizar
+                            
+                    br
+                    br

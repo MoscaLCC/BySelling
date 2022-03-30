@@ -1,0 +1,68 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title></title><!--link(rel="icon" type="image/x-icon" href="/images/upload/favicon.ico")--><!--link(rel='stylesheet', type='text/css', href='http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css')--><link href="/stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link href="/stylesheets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"><link href="/stylesheets/css/theme.css" rel="stylesheet"><link href="/images/upload/icons/css/font-awesome.css" rel="stylesheet"><link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="/stylesheets/css/style.css"><link rel="stylesheet" href="/stylesheets/css/global-style-flat.css"><script src="/scripts/jquery-3.2.1.min.js" type="text/javascript"></script><script src="/javascripts/jquery-3.2.1.js"></script><script src="/scripts/jquery-1.9.1.min.js" type="text/javascript"></script><script src="/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script><script src="/stylesheets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><script src="/scripts/flot/jquery.flot.js" type="text/javascript"></script><script src="/scripts/flot/jquery.flot.resize.js" type="text/javascript"></script><script src="/scripts/datatables/jquery.dataTables.js" type="text/javascript"></script><script src="/scripts/common.js" type="text/javascript"></script><script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script><script type="text/javascript" charset="utf8" src="/scripts/jquery.dataTables.min.js"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script><script src="/scripts/utils.js"></script></head><body><div class="navbar navbar-fixed-top"><div class="navbar-inner"><div class="container"><a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse"><i class="icon-reorder shaded"></i></a><a class="brand" href="/"> - Administrador</a><div class="nav-collapse collapse navbar-inverse-collapse"><ul class="nav pull-right"><li><a href="#"><i><img src="/images/upload/bandeiraP.png" style="max-width:30px; vertical-align: middle"></i></a></li><li><a href="#"><i><img src="/images/upload/bandeiraI.png" style="max-width:30px; height: 20px; vertical-align: middle"></i></a></li><li><a href="/perfilAdmin"><i>Ver Perfil</i></a></li><li><a href="/logout"><i>Logout</i></a></li></ul></div></div></div><div class="wrapper"><div class="container"><div class="row"><div class="span3"><div class="sidebar"><ul class="widget widget-menu unstyled"><li class="active"><a href="/index"><i class="menu-icon icon-dashboard"></i>Dashboard</a></li><li><a href="/messages"><i class="menu-icon icon-inbox"></i>Mensagens<b class="label green pull-right"></b></a></li><li><a href="/clients"><i class="menu-icon icon-user"></i>Clientes</a></li><li><a href="/orders"><i class="menu-icon icon-shopping-cart"></i>Encomendas<b class="label orange pull-right"></b></a></li><li><a href="/tasks"><i class="menu-icon icon-list"></i>Tarefas<b class="label orange pull-right"></b></a></li></ul><ul class="widget widget-menu unstyled"><li><a href="/services"><i class="menu-icon icon-book"></i>Gestão de Produtos</a></li></ul></div></div><div class="span9"><div class="module"><div class="module-head"><h3>Catalogo de produtos</h3></div><div class="module-body table"><fieldset class="no-padding">                            <div id="fotografias"><table id="fotos"></table></div></fieldset><form action="/createProd/" method="get" style="display:inline; margin:0px; padding:0px;"><button class="btn btn-large btn-success pull-right" type="submit" style="margin-left: 5px;">Novo Produto</button></form></div></div></div><script>$(document).ready(function () {
+    var products = ;
+    var sizeEcra = document.documentElement.clientWidth
+    var tamanhoFoto = 550
+    var valor = (sizeEcra / tamanhoFoto) - 1
+    var p = 0
+    var aux = 0;
+    while(p<products.length){
+        aux = p;
+        var tr = document.createElement('tr')
+        tr.setAttribute("id", "foto" + aux)
+        document.getElementById("fotos").appendChild(tr)
+        for(var j=0; j<valor && p<products.length; j++){ 
+            inserFotosd("foto" + aux, products[p])
+            p++;
+        }
+    }
+});
+function encomendarr(id){
+    window.location.href = "/produto/see/" + id;
+}
+function inserFotosd(name, foto) {
+
+    var td = document.createElement('td')
+    var container = document.createElement('div')
+    container.setAttribute("class", "fotoContainer")
+
+    var nomeh = document.createElement('P')
+    var nomet = document.createTextNode(""+ foto.NAME);
+    nomeh.appendChild(nomet);
+
+    var figure = document.createElement('figure')
+    figure.setAttribute("class", "myfigure2")
+    var img = document.createElement('img')
+    img.setAttribute("class", "joint-img")
+    img.setAttribute("src", "/images/upload/"+foto.FOTO)
+    img.setAttribute("alt", "your image")
+
+
+    var figcaption = document.createElement('figcaption')
+    var label = document.createElement('label')
+    label.setAttribute("class", "custom-file-upload")
+    label.setAttribute("style", "withd: 100%; height: 100%")
+
+    var input = document.createElement('input')
+    input.setAttribute("type", "button")
+    input.setAttribute("style", "display: none");
+    input.setAttribute("onclick", "encomendarr("+foto.id_PRODUCT+")")
+                                
+    var p = document.createElement('P')
+    p.innerHTML = "VER"
+
+    label.appendChild(input)
+    label.appendChild(p)
+
+    figcaption.appendChild(label)
+    figure.appendChild(img)
+    figure.appendChild(figcaption)
+
+    container.appendChild(nomeh)
+    
+    container.appendChild(figure)
+
+    td.appendChild(container)
+
+
+    document.getElementById(name).appendChild(td)
+}</script></div></div></div></div><div class="footer"><p style="text-align: center">© 2018 Luís Marques - Innovation Solutions</p><center><img src="/images/upload/luismarques.png" style="max-width: 200px; max-height: 100px;"></center></div></body></html>

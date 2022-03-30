@@ -1,0 +1,80 @@
+extends layout
+
+block content
+                div( class="span9")
+                    div( class="content")
+                        div( class="btn-controls")
+                            div( class="btn-box-row row-fluid")
+                                a(class="btn-box big span4")
+                                    i(class="icon-random")
+                                    -if(lastYearOrders==0)
+                                        b #{((monthOrders-stat)/stat)*100}%
+                                    -else
+                                        b #{((monthOrders-lastYearOrders)/lastYearOrders)*100}%
+                                    p(class="text-muted") Crescimento
+                                a(class="btn-box big span4")
+                                    i(class="icon-user")
+                                    b #{monthClients}
+                                    p(class="text-muted") Novos Clientes
+                                a(class="btn-box big span4")
+                                    i(class="icon-shopping-cart")
+                                    b #{monthOrders}
+                                    p(class="text-muted") Encomendas
+
+                            div( class="btn-box-row row-fluid")
+                                div( class="span8")
+                                    div( class="row-fluid")
+                                        div( class="span12")
+                                            a(href="/messages" class="btn-box small span4")
+                                                i( class="icon-envelope")
+                                                b Mensagens
+                                            a(href="/clients" class="btn-box small span4")
+                                                i(class="icon-group")
+                                                b Clientes
+                                            a(href="/orders" class="btn-box small span4")
+                                                i(class="icon-shopping-cart")
+                                                b Encomendas
+                                div( class="span4")
+                                    a(href="/tasks" class="btn-box small span12")
+                                        i( class= "icon-exclamation-sign")
+                                        b Tem #{missedMenu} tarefa(s) por ver
+
+                            div( class="btn-box-row row-fluid")
+                                .module
+                                    .module-head
+                                        h3
+                                            | Número de Encomendas
+                                    .module-body
+                                        canvas#myChart
+                                        script.
+                                            var ctx = document.getElementById('myChart').getContext('2d');
+                                            var ly = !{JSON.stringify(lastYear)};
+                                            var label = new Array();
+                                            var dataa =  new Array();
+                                            var utils = Samples.utils;
+                                            var presets = window.chartColors;
+                                            for (var i = 0; i < ly.length; i++) {
+                                                label[i] = ly[i].mes + "/" + ly[i].ano;
+                                                dataa[i] = ly[i].valor;
+                                            }
+                                            var chart = new Chart(ctx, {
+                                                // The type of chart we want to create
+                                                type: 'line',
+                                                // The data for our dataset
+                                                data: {
+                                                        labels: label,
+                                                        datasets: [{
+                                                                label: "Número de Encomendas",
+                                                                backgroundColor: utils.transparentize(presets.green),
+                                                                borderColor: presets.green,
+                                                                borderWidth: 5,
+                                                                pointHoverRadius: 7,
+                                                                data: dataa,
+                                                                fill:'start',
+                                                                lineTension: 0
+                                                        }]
+                                                },
+
+                                                // Configuration options go here
+                                                options: {}
+                                            });

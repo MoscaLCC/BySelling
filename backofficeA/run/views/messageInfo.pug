@@ -1,0 +1,36 @@
+extends layout
+block content
+    .span9
+        .content
+            .module
+                .module-head
+                    h3 Mensagem
+                .module-body
+                    form(action="/messages/" + mensagem[0].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                        button(class="btn" type="submit")
+                            i.icon-trash
+                    div(style="width:8px; height:auto; display:inline-block;")
+                    form(action="/messages/favorite/" + mensagem[0].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                        button(class="btn" type="submit")
+                            i.icon-star
+                    div(style="width:8px; height:auto; display:inline-block;")
+                    form(action="/compose/clientInfo/bymail/" + mensagem[0].client_mail + "/" +mensagem[0].idMESSAGES, method="post", style="display:inline; margin:0px; padding:0px;")
+                        button(class="btn" type="submit")
+                            i.icon-share-alt
+                    div(style="width:8px; height:auto; display:inline-block;")
+                    form(action="/messageInfo/lida/" + mensagem[0].idMESSAGES, method="post", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn" type="submit") Marcar como Lida
+                    br
+                    br
+                    p.pull-left
+                        font(size = "4")
+                            b #{mensagem[0].SUBJECT}
+                    p.pull-right
+                        | #{prettyDate(mensagem[0].Data)}
+                    hr(style="margin-top: 40px")
+                    p
+                        font(size = "3")
+                            b Remetente:
+                        |#{ mensagem[0].client_mail}
+                    br
+                    p #{mensagem[0].CONTENT}

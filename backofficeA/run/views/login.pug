@@ -1,0 +1,77 @@
+doctype html
+html
+    head
+        meta( http-equiv="Content-Type" content="text/html; charset=utf-8")
+        meta( name="viewport" content="width=device-width, initial-scale=1.0")
+        title= title
+        //link(rel='stylesheet', type='text/css', href='http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css')
+        link( type="text/css" href="/stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet")
+        link( type="text/css" href="/stylesheets/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet")
+        link( type="text/css" href="/stylesheets/css/theme.css" rel="stylesheet")
+        link( type="text/css" href="/images/icons/css/font-awesome.css" rel="stylesheet")
+        link( type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
+        rel='stylesheet')
+        script( src="/scripts/jquery-3.2.1.min.js" type="text/javascript")
+        script( src="/scripts/jquery-1.9.1.min.js" type="text/javascript")
+        script( src="/scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript")
+        script( src="/stylesheets/bootstrap/js/bootstrap.min.js" type="text/javascript")
+        script(src="/scripts/flot/jquery.flot.js" type="text/javascript")
+        script( src="/scripts/flot/jquery.flot.resize.js" type="text/javascript")
+        script( src="/scripts/datatables/jquery.dataTables.js" type="text/javascript")
+        script( src="/scripts/common.js" type="text/javascript")
+        script(type='text/javascript', charset='utf8', src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js')
+        script(type='text/javascript', charset='utf8', src='/scripts/jquery.dataTables.min.js')
+        script(async="", src="//www.google-analytics.com/analytics.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js")
+        script(src="/scripts/utils.js")
+
+    body(data-post='http://www.egrappler.com/responsive-bootstrap-admin-template-edmin/')
+        .navbar.navbar-fixed-top
+            .navbar-inner
+                .container(style='margin-top:50px;')
+                    a.btn.btn-navbar(data-toggle='collapse', data-target='.navbar-inverse-collapse')
+                        i.icon-reorder.shaded
+                    a.brand(href='index.html')
+                        | #{nome} - Administrador
+
+                    //.nav-collapse.collapse.navbar-inverse-collapse
+                        ul.nav.pull-right
+                            li
+                                a(href='#')
+                                    | Forgot your password?
+                    // /.nav-collapse
+            // /navbar-inner
+        // /navbar
+        .wrapper
+            .container
+                if(flash != null)
+                    .alert.alert-error
+                        button.close(type='button', data-dismiss='alert') ×
+                        strong Ups!
+                        |  #{flash}
+                .row
+                    .module.module-login.span4.offset4
+                        form.form-vertical(action="/", method="POST")
+                            .module-head
+                                h3 Sign In
+                            .module-body
+                                .control-group
+                                    .controls.row-fluid
+                                        input#inputEmail.span12(type='text', placeholder='Username', name="username")
+                                .control-group
+                                    .controls.row-fluid
+                                        input#inputPassword.span12(type='password', placeholder='Password',name="password" )
+                            .module-foot
+                                .control-group
+                                    .controls.clearfix
+                                        button.btn.btn-primary.pull-right(type='submit') Login
+
+                                        //label.checkbox
+                                            input(type='checkbox')
+                                            |  Remember me
+        // /.wrapper
+        div(class="footer")
+            div(class="container")
+                p(style="text-align: center") © 2018 Uniline - Todos os direitos reservados.
+
+

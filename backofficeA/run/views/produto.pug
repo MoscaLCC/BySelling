@@ -1,0 +1,108 @@
+extends layout
+block content
+    .span9
+        .content
+          .module.message
+            .module-head
+                h3 #{dataProducts.NAME}
+            .module-body.table(style='margin-top: 20px;')
+                -if (editable)
+                    form(style="position:relative;z-index: 1;" action='/orderInfo/alterar/'+order.ID_ORDER id='frmProdDef' class='sky-form' method='post' enctype='multipart/form-data')
+                        fieldset(class='no-padding')
+                            h1( name='defProduto' style="display:none" class="defProduto") #{dataProducts.NAME}                                 
+                            div(id="fotografias")
+                            table(id="fotos")
+                                tr
+                                    td(width="70%") 
+                                        img(src="/images/upload/"+dataProducts.FOTO alt="Smiley face" width="80%")
+                                    td
+                                        H4 Descrição
+                                        label(name='descrição')
+                                            p #{dataProducts.DESCRIPTION}
+
+                                        br
+                                        H4 Tamanho
+                                        label(name='tamanho')
+                                            label(class='select')
+                                            select(name='size' id='size' class="w3-input w3-border w3-hover")
+                                                -if (editable)
+                                                    option(selected='') #{order.opcao_valor.split('_')[0]}
+
+                                        br
+                                        H4 Quantidade
+                                        label(name='qauntidade')
+                                            label(class='select')
+                                            select(name='quant' id='quant' class="w3-input w3-border w3-hover")
+                                                -if (editable)
+                                                    option(selected='') #{order.opcao_valor.split('_')[1]}
+                                            input(type='number' name='idproduto' style="display:none" value=""+dataProducts.id_PRODUCT)
+                                            input(type='text' name='nameproduto' style="display:none" value=""+dataProducts.NAME)
+                                        
+
+                                        br
+                                        H4 Data de entrega prevista
+                                        label(name='data')
+                                            -if (editable)
+                                                input(type='date' name='dataentrega' id='dataentrega' value=prettyDate2(ordem.ASKED_DELIVERY_DATE))
+
+                                        br
+                                        H4 Referancia para seguir
+                                        label(name='ref')
+                                            -if (editable)
+                                                input(type='text' name='track' id='track' value=""+ordem.TRACKING)
+                                        
+                        -if (editable)
+                            section
+                                input(type='submit' class='btn btn-base btn-icon btn-icon-right pull-right' style='width: 200px;' value='Editar Encomenda')
+                -else
+                    fieldset(class='no-padding')
+                        h1( name='defProduto' style="display:none" class="defProduto") #{dataProducts.NAME}                                 
+                        div(id="fotografias")
+                        table(id="fotos")
+                            tr
+                                td(width="70%") 
+                                    img(src="/images/upload/"+dataProducts.FOTO alt="Smiley face" width="80%")
+                                td
+                                    H4 Descrição
+                                    label(name='descrição')
+                                        p #{dataProducts.DESCRIPTION}
+
+                                    br
+                                    H4 Tamanho
+                                    label(name='tamanho')
+                                        label(class='select')
+                                        select(name='size' id='size' class="w3-input w3-border w3-hover")
+                                            -if (editable)
+                                                option(selected='') #{order.opcao_valor.split('_')[0]}
+
+                                    br
+                                    H4 Quantidade
+                                    label(name='qauntidade')
+                                        label(class='select')
+                                        select(name='quant' id='quant' class="w3-input w3-border w3-hover")
+                                            -if (editable)
+                                                option(selected='') #{order.opcao_valor.split('_')[1]}
+                                        input(type='number' name='idproduto' style="display:none" value=""+dataProducts.id_PRODUCT)
+                                        input(type='text' name='nameproduto' style="display:none" value=""+dataProducts.NAME)
+
+                        form(action="/produto/delete/" + dataProducts.id_PRODUCT, method="get", style="display:inline; margin:0px; padding:0px;")
+                            button(class="btn btn-large btn-danger pull-right" type="submit" style = "margin-left: 5px;") Apagar Produto
+
+                    
+        script.
+            $(document).ready(function () {
+                var product = !{JSON.stringify(dataProducts)};
+                var sizes = !{JSON.stringify(dataSizes)};
+
+                for (var k=0;k<sizes.length;k++){
+                    var z = document.createElement('option')
+                    z.append(sizes[k].size)
+                    if(sizes[k].type == 0){
+                        document.getElementById("size").appendChild(z)
+                    } else {
+                        document.getElementById("quant").appendChild(z)
+                    }
+                }
+            });
+
+    

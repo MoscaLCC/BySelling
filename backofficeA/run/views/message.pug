@@ -1,0 +1,307 @@
+extends layout
+block content
+    style.
+        [type=checkbox] { display: none; }
+        label { cursor: pointer; }
+        [class*=icon-].icon-fixed-width { text-align: left; }
+
+
+    .span9
+                        .content
+                            .module.message
+                                .module-head
+                                    h3
+                                        | Mensagens
+                                .module-option.clearfix
+                                    .pull-left
+                                        .btn-group
+                                            button.btn.btn-info
+                                                | Caixa de Entrada(#{inbox})
+                                            button.btn.btn-info.dropdown-toggle(data-toggle="dropdown")
+                                                span.caret
+                                            ul.dropdown-menu
+                                                li
+                                                    a(name="drop" value="1") Caixa de Entrada(#{inbox})
+                                                li
+                                                    a(name="drop" value="2") Enviadas
+                                                li
+                                                    a(name="drop" value="3") Favoritos
+                                                li
+                                                    a(name="drop" value="4") Lixo
+                                    .pull-right
+                                        a(href="/compose")
+                                            button.btn.btn-primary Compor
+
+                                div.groupe.d1
+                                    .module-body.table
+                                        table.table.table-message
+                                            tbody
+                                                tr.heading
+                                                    td.cell-check
+                                                        input.inbox-checkbox(type="checkbox")
+                                                    td.cell-icon
+                                                    td.cell-author.hidden-phone.hidden-tablet
+                                                        | Remetente
+                                                    td.cell-title
+                                                        | Assunto
+                                                    td.cell-time.align-right
+                                                        | Data
+
+                                                -for(var y=0; y<inbox_msm.length;y++)
+                                                    -if(inbox_msm[y].IS_READ==1)
+                                                        tr.unread
+                                                            td.cell-icon
+                                                                form(action="/messages/" + inbox_msm[y].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                    button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                        i.icon-trash
+                                                            td.cell-icon
+                                                                label
+                                                                    form(action="/messages/favorite/" + inbox_msm[y].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                        button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                            -if(inbox_msm[y].IS_FAVORITE==1)
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star(style="color:orange")
+                                                                            -else
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star-empty(style="color:orange")
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + inbox_msm[y].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{inbox_msm[y].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + inbox_msm[y].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{inbox_msm[y].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + inbox_msm[y].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(inbox_msm[y].Data)}
+                                                    -else
+                                                        tr.read
+                                                            td.cell-icon
+                                                                form(action="/messages/" + inbox_msm[y].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                    button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                        i.icon-trash
+                                                            td.cell-icon
+                                                                label
+                                                                    form(action="/messages/favorite/" + inbox_msm[y].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                        button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                            -if(inbox_msm[y].IS_FAVORITE==1)
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star(style="color:orange")
+                                                                            -else
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star-empty(style="color:orange")
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + inbox_msm[y].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{inbox_msm[y].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + inbox_msm[y].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{inbox_msm[y].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + inbox_msm[y].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(inbox_msm[y].Data)}
+
+                                div.groupe.d2
+                                    .module-body.table
+                                        table.table.table-message
+                                            tbody
+                                                tr.heading
+                                                    td.cell-check
+                                                        input.inbox-checkbox(type="checkbox")
+                                                    td.cell-icon
+                                                    td.cell-author.hidden-phone.hidden-tablet
+                                                        | Remetente
+                                                    td.cell-title
+                                                        | Assunto
+                                                    td.cell-time.align-right
+                                                        | Data
+
+                                                -for(var l=0; l<sent_msm.length;l++)
+                                                    -if(sent_msm[l].IS_READ==1)
+                                                        tr.unread
+                                                            td.cell-icon
+                                                                form(action="/messages/" + sent_msm[l].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                    button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                        i.icon-trash
+                                                            td.cell-icon
+                                                                label
+                                                                    form(action="/messages/favorite/" + sent_msm[l].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                        button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                            -if(sent_msm[l].IS_FAVORITE==1)
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star(style="color:orange")
+                                                                            -else
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star-empty(style="color:orange")
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + sent_msm[l].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{sent_msm[l].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + sent_msm[l].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{sent_msm[l].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + sent_msm[l].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(sent_msm[l].Data)}
+                                                    -else
+                                                        tr.read
+                                                            td.cell-icon
+                                                                form(action="/messages/" + sent_msm[l].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                    button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                        i.icon-trash
+                                                            td.cell-icon
+                                                                label
+                                                                    form(action="/messages/favorite/" + sent_msm[l].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                        button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                            -if(sent_msm[l].IS_FAVORITE==1)
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star(style="color:orange")
+                                                                            -else
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star-empty(style="color:orange")
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + sent_msm[l].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{sent_msm[l].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + sent_msm[l].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{sent_msm[l].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + sent_msm[l].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(sent_msm[l].Data)}
+
+                                div.groupe.d3
+                                    .module-body.table
+                                        table.table.table-message
+                                            tbody
+                                                tr.heading
+                                                    td.cell-check
+                                                        input.inbox-checkbox(type="checkbox")
+                                                    td.cell-icon
+                                                    td.cell-author.hidden-phone.hidden-tablet
+                                                        | Remetente
+                                                    td.cell-title
+                                                        | Assunto
+                                                    td.cell-time.align-right
+                                                        | Data
+
+                                                -for(var k=0; k<favorites_msm.length;k++)
+                                                    -if(favorites_msm[k].IS_READ==1)
+                                                        tr.unread
+                                                            td.cell-icon
+                                                                form(action="/messages/" + favorites_msm[k].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                    button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                        i.icon-trash
+                                                            td.cell-icon
+                                                                label
+                                                                    form(action="/messages/favorite/" + favorites_msm[k].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                        button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                            -if(favorites_msm[k].IS_FAVORITE==1)
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star(style="color:orange")
+                                                                            -else
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star-empty(style="color:orange")
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + favorites_msm[k].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{favorites_msm[k].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + favorites_msm[k].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{favorites_msm[k].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + favorites_msm[k].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(favorites_msm[k].Data)}
+                                                    -else
+                                                        tr.read
+                                                            td.cell-icon
+                                                                form(action="/messages/" + favorites_msm[k].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                    button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                        i.icon-trash
+                                                            td.cell-icon
+                                                                label
+                                                                    form(action="/messages/favorite/" + favorites_msm[k].idMESSAGES, method = "post", style="display:inline; margin:0px; padding:0px;")
+                                                                        button(type="submit" style="padding: 0; border: none; background: none;")
+                                                                            -if(favorites_msm[k].IS_FAVORITE==1)
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star(style="color:orange")
+                                                                            -else
+                                                                                input(type="checkbox")
+                                                                                i.icon-fixed-width.icon-star-empty(style="color:orange")
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + favorites_msm[k].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{favorites_msm[k].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + favorites_msm[k].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{favorites_msm[k].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + favorites_msm[k].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(favorites_msm[k].Data)}
+
+                                div.groupe.d4
+                                    .module-body.table
+                                        table.table.table-message
+                                            tbody
+                                                tr.heading
+                                                    td.cell-check
+                                                        input.inbox-checkbox(type="checkbox")
+                                                    td.cell-icon
+                                                    td.cell-author.hidden-phone.hidden-tablet
+                                                        | Remetente
+                                                    td.cell-title
+                                                        | Assunto
+                                                    td.cell-time.align-right
+                                                        | Data
+
+                                                -for(var r=0; r<trash_msm.length;r++)
+                                                    -if(trash_msm[r].IS_READ==1)
+                                                        tr.unread
+                                                            td.cell-icon
+                                                            td.cell-icon
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + trash_msm[r].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{trash_msm[r].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + trash_msm[r].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{trash_msm[r].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + trash_msm[r].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(trash_msm[r].Data)}
+                                                    -else
+                                                        tr.read
+                                                            td.cell-icon
+                                                            td.cell-icon
+                                                            td.cell-author.hidden-phone.hidden-tablet
+                                                                a(href = "/messageInfo/" + trash_msm[r].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{trash_msm[r].client_mail}
+                                                            td.cell-title
+                                                                a(href = "/messageInfo/" + trash_msm[r].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{trash_msm[r].SUBJECT}
+                                                            td.cell-time.align-right
+                                                                a(href = "/messageInfo/" + trash_msm[r].idMESSAGES style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                                                    | #{prettyDate(trash_msm[r].Data)}
+
+                                .module-foot
+                                script.
+                                    $(function(){
+                                            $(".dropdown-menu").on('click', 'li a', function(){
+                                                $(".btn.btn-info:first-child").text($(this).text());
+                                                $(".btn.btn-info:first-child").val($(this).text());
+                                            });
+                                    });
+
+                                    $("[type=checkbox]").change(function () {
+                                        $checkbox = $(this)
+                                        $icon = $checkbox.siblings("[class*=icon-]")
+
+                                        checked = $checkbox.is(":checked")
+
+                                        $icon.toggleClass('icon-star-empty', !checked)
+                                            .toggleClass('icon-star', checked)
+                                    });
+
+                                    $(function () {
+                                        $('.groupe').hide();
+                                        $('.d1').show();
+
+                                        $('.dropdown-menu').on('click', 'li a', function () {
+                                            $('.groupe').hide();
+                                            console.log(('.d' + $(this).attr("value")));
+                                            $('.d' + $(this).attr("value")).show();
+                                        })
+                                    });

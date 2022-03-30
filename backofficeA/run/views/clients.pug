@@ -1,0 +1,41 @@
+extends layout
+block content
+                div(class="span9")
+                    .module
+                        .module-head
+                            h3
+                                | Todos os clientes
+                        .module-body.table
+                            table#example.datatable-1.table(cellpadding='0', cellspacing='0', border='0', width='100%', aria-describedby='DataTables_Table_0_info', style='width: 100%;')
+                                col(width="50%")
+                                col(width="50%")
+                                thead(style="display: none")
+                                    tr
+                                        th Clientes
+                                        th Cilentes
+                                tbody
+                                    -var f = 0
+                                    -for(var j=0,a=0; j<dataGet.length/2;j++,a++)
+                                        tr
+                                            -for(var k=0; k<2; k++)
+                                                -var tamanho = dataGet.length/2
+                                                //-console.log(j+k+a+f)
+                                                //-console.log("j" + j)
+                                                td
+                                                        -if(j != parseInt(tamanho) || k != 1 || dataGet.length % 2 == 0)
+                                                                div( class="media user")
+                                                                    div( class="media-body")
+                                                                        a.media-avatar.pull-left(href='#')
+                                                                            img(src='/images/upload/' + dataGet[j + k + a].img_path)
+                                                                        h3(class="media-title" style="text-align: center;")=dataGet[j+k+a].NAME
+                                                                            p( style="text-align: center;")
+                                                                                small( class="muted" )=dataGet[j+k+a].COUNTRY
+                                                                                div(class="media-option btn-group shaded-icon pull-right")
+                                                                                    -if(dataGet[j + k + a].IS_BLOCKED == 1)
+                                                                                        button( style="hover: disabled!; active: disabled!; background-color: #ff3333; color: #ffffff") BLOQUEADO
+                                                                                    form(action="/compose/clientInfo/" + dataGet[j+k+a].EMAIL, method="post", style="display:inline; margin:0px; padding:0px;")
+                                                                                        button( class="btn btn-small" type="submit")
+                                                                                            i( class="icon-envelope" )
+                                                                                    a(href="/clientInfo/" + dataGet[j + k + a].EMAIL)
+                                                                                        button(class="btn btn-small")
+                                                                                            i(class="icon-share-alt")

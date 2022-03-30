@@ -1,0 +1,100 @@
+extends layout
+block content
+    .span9
+        .module
+            .module-head
+                h3 Tarefa #{task[0].ID_TASK}
+            .module-body
+                -var t = task[0].ID_TASK
+                p
+                   b
+                    font(size="3")
+                        |Descrição:
+                   |#{task[0].DESCRIPTION}
+
+                -if(task[0].Tipo==1)
+                    table.table
+                        tbody
+                            tr
+                                th: font(size="3") NIF Cliente:
+                                td #{order[0].Client_NIF}
+                                th: font(size="3") Data Encomenda:
+                                td #{prettyDate(order[0].BEGIN_DATE)}
+                            tr
+                                th: font(size="3") Data Entrega Requerida:
+                                td #{prettyDate(order[0].ASKED_DELIVERY_DATE)}
+                                -var estado
+                                -if(order[0].STATUS==0)
+                                    -estado = "Não Aprovada"
+                                -if(order[0].STATUS==1)
+                                    -estado = "Em processamento"
+                                -else
+                                    -estado = "Cancelada"
+                                th: font(size="3") Estado:
+                                td #{estado}
+                    a(href="/orderInfo/" + order[0].ID_ORDER)
+                        button(class="btn btn-large btn-info pull-right") Ver Encomenda
+                    form(action="/taskDescription/encomendas/" + t+"?_method=PUT", method="post", style="display:inline; margin:0px; padding:0px;")
+                        button(class="btn btn-large btn-success" type="submit" name="encomendas" value="cancelar") Cancelar Encomenda
+                        div(style="width:8px; height:auto; display:inline-block;")
+                    form(action="/compose/clientInfo/" + task[0].Client_NIF, method="post" style="display:inline; margin:0px; padding:0px;")
+                        button(class="btn btn-large" type="submit" name="encomendas" value="contactar") Contactar Cliente
+                -else
+                    -if(task[0].Tipo==0)
+                        br
+                        table.table
+                            tbody
+                                tr
+                                    th: font(size="3") Nome:
+                                    td #{client[0].NAME}
+                                    th: font(size="3") Telefone:
+                                    td #{client[0].PHONE}
+                                tr
+                                    th: font(size="3") Nif:
+                                    td #{client[0].NIF}
+                                    th: font(size="3") Cidade:
+                                    td #{client[0].CITY}
+                                tr
+                                    th: font(size="3") Email:
+                                    td #{client[0].EMAIL}
+                                    th: font(size="3") Pais:
+                                    td #{client[0].COUNTRY}
+                                tr
+                                    th: font(size="3") Morada:
+                                    td #{client[0].STREET}
+                                    th: font(size="3") Código Postal:
+                                    td #{client[0].ZIP_CODE}
+                        br
+                        form(action="/taskDescription/porra/" + t+"?_method=PUT", method="post")
+                            button(type="submit" class="btn btn-large btn-success" name="porra" value="aceitar") Registar Cliente
+                            div(style="width:8px; height:auto; display:inline-block;")
+                            button(type="submit" class="btn btn-large btn-danger" name="porra" value="rejeitar") Cancelar Registo
+                    -else if(task[0].Tipo==2)
+                                br
+                                table.table
+                                    tbody
+                                        tr
+                                            th: font(size="3") NIF Cliente:
+                                            td #{order[0].Client_NIF}
+                                            th: font(size="3") Data Encomenda:
+                                            td #{prettyDate(order[0].BEGIN_DATE)}
+                                        tr
+                                            th: font(size="3") Data Entrega Requerida:
+                                            td #{prettyDate(order[0].ASKED_DELIVERY_DATE)}
+                                            -var estado
+                                            -if(order[0].STATUS==0)
+                                                -estado = "Não Aprovada"
+                                            -if(order[0].STATUS==1)
+                                                -estado = "Em processamento"
+                                            -else
+                                                -estado = "Cancelada"
+                                            th: font(size="3") Estado:
+                                            td #{estado}
+                                a(href="/orderInfo/" + order[0].ID_ORDER)
+                                    button(class="btn btn-large btn-info") Ver Encomenda
+                                form(action="/compose/clientInfo/" + task[0].Client_NIF, method="post" style="display:inline")
+                                    div(style="width:8px; height:auto; display:inline-block;")
+                                    button(class="btn btn-large" type="submit") Contactar Cliente
+                                form(action="/compose/atualizar/" + task[0].ID_TASK, method="post" style="display:inline")
+                                    div(style="width:8px; height:auto; display:inline-block;")
+                                    button(class="btn btn-large" type="submit") Marcar como vista

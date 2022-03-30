@@ -1,0 +1,35 @@
+extends layout
+block content
+    .span9
+        .content
+            .module
+                .module-head
+                    h3 Compor Mensagem
+                .module-body
+                    if(status!=null)
+                        .alert.alert-error
+                            button.close(type='button', data-dismiss='alert') ×
+                            strong Ups!
+                            |  #{status}
+                    br
+                    form.form-horizontal.row-fluid(action="/compose" method="post")
+                        .control-group
+                            label.control-label(for='basicinput') Email
+                            -if(emailDefault==null)
+                                .controls
+                                    input#basicinput.span8(type='text', placeholder= email, name='email' required)
+                            -else
+                                .controls
+                                    input#basicinput.span8(type='text', value= emailDefault, name='email' required)
+                        .control-group
+                            label.control-label(for='basicinput') Assunto
+                            .controls
+                                input#basicinput.span8(type='text', placeholder= assunto, name='assunto' required)
+                        .control-group
+                            label.control-label(for='basicinput') Mensagem
+                            .controls
+                                textarea.span8(rows='5', placeholder= mensagem, name='mensagem' required)
+                        .control-group
+                            .controls
+                                button.btn(type='submit') Enviar
+        // /.content

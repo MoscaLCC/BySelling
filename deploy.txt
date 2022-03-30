@@ -1,0 +1,21 @@
+"Company"[{
+	"name":"PeugasLDA.",
+	"email":"encomenda.uniline@gmail.com",
+	"phone":"253000000",
+	"adress":"Rua da Travessa_4000-300_Guimarães_Portugal",
+	"webpage_link":"http://www.etpeugas.com/pt/",
+	"url_icon":"https://icon-icons.com/icons2/390/PNG/512/socks_39463.png",
+	"facebook_link":"https://www.facebook.com/peugas.co/",
+	"twitter_link":"https://twitter.com/PeugasFilisa",
+	"statistics":"1000",
+	"nif":"123456789"
+}];"Admin"[{
+    "username":"encomenda.uniline",
+      "password":"admin123"
+  }-{
+      "username":"madalenaa.castro",
+      "password":"Teste123"
+  }-{
+      "username":"luismarques24",
+      "password":"olaola"
+  }]

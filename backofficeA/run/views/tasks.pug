@@ -1,0 +1,35 @@
+extends layout
+block content
+     .span9
+        .content
+            .module.message
+               .module-head
+                 h3 Tarefas
+               .module-body.table(style='margin-top: 20px;')
+                    table#example.datatable-1.table.table-message(cellpadding='0', cellspacing='0', border='0', width='100%', aria-describedby='DataTables_Table_0_info', style='width: 100%;')
+                         thead
+                           tr
+                             th.cell-icon
+                             th.cell-title Descrição
+                             th.cell-status.hidden-phone.hidden-tablet Estado
+                         tbody
+                           -for(var i=0;i<missedd.length;i++)
+                                tr.task
+                                    td.cell-icon
+                                        a(href = "/taskDescription/" + missedd[i].ID_TASK style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                            i.icon-checker.high
+                                    td.cell-title
+                                        a(href = "/taskDescription/" + missedd[i].ID_TASK style = "display:block; width:100%; height:100%; border:none; outline:none; text-decoration:none; color:inherit;")
+                                           | #{missedd[i].DESCRIPTION}
+                                    td.cell-status.hidden-phone.hidden-tablet
+                                      b.due Por ver
+
+                           -for(var j=0;j<nMissedd.length;j++)
+                               tr.task.resolved
+                                   td.cell-icon
+                                        i.icon-checker.high
+                                   td.cell-title
+                                        | #{nMissedd[j].DESCRIPTION}
+                                   td.cell-status.hidden-phone.hidden-tablet
+                                        | Vista
+               .module-foot
